@@ -5,8 +5,14 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS
-from models.models import metadate
+import os
+import sys
+
+sys.path.append(os.path.join(sys.path[0], 'srs'))
+
+from src.config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS
+from src.auth.models import metadate as metadate_auth
+from src.operations.models import metadata as metadate_operation
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -29,7 +35,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = metadate
+target_metadata = [metadate_auth, metadate_operation]
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
